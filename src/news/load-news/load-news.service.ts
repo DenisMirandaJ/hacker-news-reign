@@ -3,9 +3,9 @@ import { Interval, Timeout } from '@nestjs/schedule';
 import { InjectRepository } from '@nestjs/typeorm';
 import axios from 'axios';
 import { Repository } from 'typeorm';
-import { HackerNews } from '../db/news.entity';
-import { NewsLoadTimes } from '../db/options.entity';
-import { apiRateLimiter } from '../utils/utils';
+import { HackerNews } from '../../db/news.entity';
+import { NewsLoadTimes } from '../../db/options.entity';
+import { apiRateLimiter } from '../../utils/utils';
 import {
   HackerNewsResponse,
   Hit,

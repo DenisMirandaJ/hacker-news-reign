@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
-import { HighlightResult } from '../load-news/interfaces/hackerNewsApiResponse.type';
+import { HighlightResult } from '../news/load-news/interfaces/hackerNewsApiResponse.type';
 
 @Entity()
 export class HackerNews {

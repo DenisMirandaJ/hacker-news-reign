@@ -4,7 +4,7 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { LoadNewsModule } from './load-news/load-news.module';
+import { LoadNewsModule } from './news/load-news/load-news.module';
 import configuration from './config/configuration';
 import { NewsLoadTimes } from './db/options.entity';
 import { HackerNews } from './db/news.entity';

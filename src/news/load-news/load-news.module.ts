@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { HackerNews } from '../db/news.entity';
-import { NewsLoadTimes } from '../db/options.entity';
+import { HackerNews } from '../../db/news.entity';
+import { NewsLoadTimes } from '../../db/options.entity';
 import { LoadNewsService } from './load-news.service';
 
 @Module({
