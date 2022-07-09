@@ -1,3 +1,4 @@
+import { AuthModule } from './auth/auth.module';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -8,9 +9,11 @@ import configuration from './config/configuration';
 import { NewsLoadTimes } from './db/options.entity';
 import { HackerNews } from './db/news.entity';
 import { ScheduleModule } from '@nestjs/schedule';
+import { Users } from './db/users.entity';
 
 @Module({
   imports: [
+    AuthModule,
     //TODO: configure env variables in a nestjs way and type .env
     ConfigModule.forRoot({ isGlobal: true, load: [configuration] }),
     TypeOrmModule.forRoot({
@@ -20,7 +23,7 @@ import { ScheduleModule } from '@nestjs/schedule';
       username: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: [NewsLoadTimes, HackerNews],
+      entities: [NewsLoadTimes, HackerNews, Users],
       synchronize: true,
     }),
     ScheduleModule.forRoot(),
