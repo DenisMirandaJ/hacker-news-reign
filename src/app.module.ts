@@ -1,3 +1,4 @@
+import { SearchNewsController } from './news/search-news/searchNews.controller';
 import { SearchNewsModule } from './news/search-news/searchNews.module';
 import { AuthModule } from './auth/auth.module';
 import { Module } from '@nestjs/common';

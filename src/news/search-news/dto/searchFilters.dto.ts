@@ -1,39 +1,50 @@
-export class RawSearchFiltersDto {
-  author?: string;
-  tags?: string;
-  min_date?: string;
-  max_date?: string;
-  month_word?:
-    | 'january'
-    | 'february'
-    | 'march'
-    | 'april'
-    | 'may'
-    | 'june'
-    | 'july'
-    | 'august'
-    | 'september'
-    | 'october'
-    | 'november'
-    | 'december';
-}
+import { Transform } from 'class-transformer';
+import { IsIn, IsNumber, IsOptional, IsString } from 'class-validator';
+import { MonthNameType } from '../../../types/miscellanius.type';
+import { monthNames } from '../../../utils/date.utils';
+import { parseQueryNumber, RecursiveArray } from '../../../utils/utils';
+import { transformSearchQueryTags } from '../transformers/searchQuery.transformer';
 
-export class TrasnformedSearchFiltersDto {
+export class QueryFiltersDto {
+  @IsString()
+  @IsOptional()
   author?: string;
-  tags?: string;
-  min_date?: string;
-  max_date?: string;
-  month_word?:
-    | 'january'
-    | 'february'
-    | 'march'
-    | 'april'
-    | 'may'
-    | 'june'
-    | 'july'
-    | 'august'
-    | 'september'
-    | 'october'
-    | 'november'
-    | 'december';
+
+  @Transform(({ value }) => transformSearchQueryTags(value))
+  @IsOptional()
+  tags?: RecursiveArray<string>;
+
+  @Transform(({ value }) => parseInt(value))
+  @IsNumber(
+    { maxDecimalPlaces: 0 },
+    { message: 'Must be a UNIX timestamp number' },
+  )
+  @IsOptional()
+  min_date?: number; // Unix TimeStamp
+
+  @Transform(({ value }) => parseInt(value))
+  @IsNumber(
+    { maxDecimalPlaces: 0 },
+    { message: 'Must be a UNIX timestamp number' },
+  )
+  @IsOptional()
+  max_date?: number; // Unix TimeStamp
+
+  @IsString()
+  @Transform(({ value }) => (value as string).toLowerCase())
+  @IsIn(monthNames)
+  @IsOptional()
+  month_word?: MonthNameType;
+
+  @Transform(({ value }) => parseQueryNumber(value, { default: 1, min: 1 }))
+  @IsNumber()
+  @IsOptional()
+  page = 1;
+
+  @Transform(({ value }) =>
+    parseQueryNumber(value, { default: 5, max: 5, min: 1 }),
+  )
+  @IsNumber()
+  @IsOptional()
+  itemsPerPage = 5;
 }
