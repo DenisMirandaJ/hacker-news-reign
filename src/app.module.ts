@@ -1,3 +1,4 @@
+import { SearchNewsModule } from './news/search-news/searchNews.module';
 import { AuthModule } from './auth/auth.module';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
@@ -13,6 +14,7 @@ import { Users } from './db/users.entity';
 
 @Module({
   imports: [
+    SearchNewsModule,
     AuthModule,
     //TODO: configure env variables in a nestjs way and type .env
     ConfigModule.forRoot({ isGlobal: true, load: [configuration] }),
