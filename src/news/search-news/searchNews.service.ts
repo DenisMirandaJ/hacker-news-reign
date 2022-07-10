@@ -12,6 +12,14 @@ export class SearchNewsService {
     private hackerNewsRepository: Repository<HackerNews>,
   ) {}
 
+  /**
+   * Search items based on author, min_date, max_date, month_name and tags
+   *
+   * Notes: if provided min_date and max_date override the month name
+   *
+   * @param filters {QueryFiltersDto} - Search Filters for the Hacker news API
+   * @returns - HAckerNewsList
+   */
   async findMany(filters: QueryFiltersDto) {
     let dateRange: { minDate: number; maxDate: number };
 
@@ -28,8 +36,6 @@ export class SearchNewsService {
       dateRange.minDate = filters?.min_date;
       dateRange.maxDate = filters?.max_date;
     }
-
-    const a = await this.hackerNewsRepository.find({ take: 10 });
 
     let query = this.hackerNewsRepository.createQueryBuilder('hacker_news');
 
