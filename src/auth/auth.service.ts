@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as argon2 from 'argon2';
 import { Repository } from 'typeorm';
@@ -36,6 +36,32 @@ export class AuthService {
       };
     } else {
       throw new BussinessExceptions.InvalidCredentialsException();
+    }
+  }
+
+  /**
+   * Checks JWT and returns false, true or "expired" accordingly1
+   *
+   * @param jwt - json web token
+   * @returns {boolean | "expired"}
+   */
+  public checkJwt(jwt: string): boolean | 'expired' {
+    if (!jwt) {
+      return false;
+    }
+
+    jwt = jwt?.replace('Bearer ', '');
+    jwt = jwt?.replace('bearer ', '');
+
+    try {
+      jsonwebtoken.verify(jwt, process.env.JWT_SECRET);
+      return true;
+    } catch (error) {
+      if (error instanceof jsonwebtoken.TokenExpiredError) {
+        return 'expired';
+      }
+
+      return false;
     }
   }
 }

@@ -1,7 +1,7 @@
 import { SearchNewsController } from './news/search-news/searchNews.controller';
 import { SearchNewsModule } from './news/search-news/searchNews.module';
 import { AuthModule } from './auth/auth.module';
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
@@ -12,6 +12,7 @@ import { NewsLoadTimes } from './db/options.entity';
 import { HackerNews } from './db/news.entity';
 import { ScheduleModule } from '@nestjs/schedule';
 import { Users } from './db/users.entity';
+import { AuthMiddleware } from './middlewares/auth.middleware';
 
 @Module({
   imports: [
@@ -35,4 +36,8 @@ import { Users } from './db/users.entity';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(AuthMiddleware).forRoutes(SearchNewsController);
+  }
+}
