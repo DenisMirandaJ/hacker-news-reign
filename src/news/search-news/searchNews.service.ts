@@ -62,8 +62,8 @@ export class SearchNewsService {
     }
 
     query = query
-      .skip((filters.page - 1) * filters.itemsPerPage)
-      .take(filters.itemsPerPage);
+      .skip((filters.page - 1) * filters.items_per_page)
+      .take(filters.items_per_page);
 
     const result = await query.getMany();
 
