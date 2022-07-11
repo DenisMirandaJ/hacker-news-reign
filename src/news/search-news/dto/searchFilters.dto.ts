@@ -1,4 +1,4 @@
-import { ApiPropertyOptional } from '@nestjs/swagger';
+import { ApiPropertyOptional, OmitType, PickType } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
 import { IsIn, IsNumber, IsOptional, IsString } from 'class-validator';
 import { MonthNameType } from '../../../types/miscellanius.type';
@@ -56,3 +56,13 @@ export class QueryFiltersDto {
   @IsOptional()
   items_per_page = 5;
 }
+
+export class VisibilityQueryFiltersDto extends OmitType(QueryFiltersDto, [
+  'page',
+  'items_per_page',
+] as const) {}
+
+export class ShowHiddenRecordsOptionsDto extends PickType(QueryFiltersDto, [
+  'page',
+  'items_per_page',
+] as const) {}

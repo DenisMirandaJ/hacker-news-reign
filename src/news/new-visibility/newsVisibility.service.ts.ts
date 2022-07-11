@@ -3,24 +3,31 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { HackerNews } from '../../db/news.entity';
 import { getDateRangeByLastMonth } from '../../utils/date.utils';
-import { QueryFiltersDto } from './dto/searchFilters.dto';
+import {
+  ShowHiddenRecordsOptionsDto,
+  VisibilityQueryFiltersDto,
+} from '../search-news/dto/searchFilters.dto';
 
 @Injectable()
-export class SearchNewsService {
+export class NewsVisibilityService {
   constructor(
     @InjectRepository(HackerNews)
     private hackerNewsRepository: Repository<HackerNews>,
   ) {}
 
   /**
-   * Search items based on author, min_date, max_date, month_name and tags
-   * show only non hidden records
+   * Hide or Show items based on author, min_date, max_date, month_name and tags
+   *
    * Notes: if provided min_date and max_date override the month name
    *
    * @param filters {QueryFiltersDto} - Search Filters for the Hacker news API
-   * @returns - HAckerNewsList
+   * @param action {'hide'|'show'} - wether to 'hide' or 'show' the mmatching recrords
+   * @returns - HAckerNewsList -
    */
-  async findMany(filters: QueryFiltersDto) {
+  async changeVisibility(
+    filters: VisibilityQueryFiltersDto,
+    hide: 'hide' | 'show',
+  ) {
     let dateRange: { minDate: number; maxDate: number };
 
     if (filters.month_word) {
@@ -37,7 +44,10 @@ export class SearchNewsService {
       dateRange.maxDate = filters?.max_date;
     }
 
-    let query = this.hackerNewsRepository.createQueryBuilder('hacker_news');
+    let query = this.hackerNewsRepository
+      .createQueryBuilder('hacker_news')
+      .update()
+      .set({ hidden: hide === 'hide' });
 
     if (filters.author) {
       query = query.where('LOWER(hacker_news.author) = LOWER(:author)', {
@@ -61,21 +71,29 @@ export class SearchNewsService {
       }
     }
 
+    const result = await query.execute();
+
+    return { updatedRows: result.affected };
+  }
+
+  async getHiddenRecords(filters: ShowHiddenRecordsOptionsDto) {
+    let query = this.hackerNewsRepository.createQueryBuilder('hacker_news');
+
     query = query
-      .where('hacker_news.hidden = false')
+      .where('hacker_news.hidden = true')
       .skip((filters.page - 1) * filters.items_per_page)
       .take(filters.items_per_page);
 
     const result = await query.getMany();
 
-    const totalHackerNews = await this.hackerNewsRepository.count({
-      where: { hidden: false },
+    const totalHiddenNews = await this.hackerNewsRepository.count({
+      where: { hidden: true },
     });
 
     return {
-      total: totalHackerNews,
+      total: totalHiddenNews,
       page: filters.page,
-      total_pages: Math.ceil(totalHackerNews / filters.items_per_page),
+      total_pages: Math.ceil(totalHiddenNews / filters.items_per_page),
       items_per_page: filters.items_per_page,
       items: result,
     };

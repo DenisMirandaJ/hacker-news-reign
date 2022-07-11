@@ -5,6 +5,7 @@ import axios from 'axios';
 import { Repository } from 'typeorm';
 import { HackerNews } from '../../db/news.entity';
 import { NewsLoadTimes } from '../../db/options.entity';
+import BussinessExceptions from '../../exceptions/customExceptions';
 import { apiRateLimiter } from '../../utils/utils';
 import {
   HackerNewsResponse,
@@ -57,16 +58,22 @@ export class LoadNewsService {
 
     // Wrap the api call on a rate limiter of one request every 100ms, just to be good citizens
     const response = await apiRateLimiter.schedule(async () => {
-      return axios.get<HackerNewsResponse>(
-        'https://hn.algolia.com/api/v1/search_by_date',
-        {
-          params: {
-            query: 'nodejs',
-            page,
-            numericFilters,
+      try {
+        return axios.get<HackerNewsResponse>(
+          'https://hn.algolia.com/api/v1/search_by_date',
+          {
+            params: {
+              query: 'nodejs',
+              page,
+              numericFilters,
+            },
           },
-        },
-      );
+        );
+      } catch (error) {
+        throw new BussinessExceptions.ResourceUnavaliableException(
+          'Could not fetch from Hacker News API',
+        );
+      }
     });
 
     return response.data;
@@ -101,13 +108,25 @@ export class LoadNewsService {
     let numberOfPages: number;
     let newsLoaded = 0;
     while (!numberOfPages || page < numberOfPages) {
-      const hackerNews = await this.requestHackerNews(page, lastRetrievalDate);
-      if (!numberOfPages) {
-        numberOfPages = hackerNews.nbPages;
+      try {
+        const hackerNews = await this.requestHackerNews(
+          page,
+          lastRetrievalDate,
+        );
+        if (!numberOfPages) {
+          numberOfPages = hackerNews.nbPages;
+        }
+        await this.storeHackerNews(hackerNews.hits);
+        newsLoaded += hackerNews.hits.length;
+        page += 1;
+      } catch (error) {
+        this.logger.log(
+          `Could not fetch from Hacker News API`,
+          'Hacker News API',
+        );
+
+        return;
       }
-      await this.storeHackerNews(hackerNews.hits);
-      newsLoaded += hackerNews.hits.length;
-      page += 1;
     }
 
     await this.newsLoadTimesRepository.insert({ timeStamp: retrievalDate });

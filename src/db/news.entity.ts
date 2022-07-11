@@ -53,4 +53,7 @@ export class HackerNews {
 
   @Column({ type: 'json', nullable: true })
   _highlightResult: HighlightResult;
+
+  @Column({ type: 'boolean', default: false })
+  hidden: boolean;
 }

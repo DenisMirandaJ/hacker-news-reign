@@ -1,5 +1,5 @@
-import { HideNewsService } from './news/hide-news/hideNews.service';
-import { HideNewsModule } from './news/hide-news/hideNews.module';
+import { NewsVisibilityService } from './news/new-visibility/newsVisibility.service.ts';
+import { NewsVisibilityModule } from './news/new-visibility/newsVisibility.module';
 import { SearchNewsController } from './news/search-news/searchNews.controller';
 import { SearchNewsModule } from './news/search-news/searchNews.module';
 import { AuthModule } from './auth/auth.module';
@@ -15,10 +15,11 @@ import { HackerNews } from './db/news.entity';
 import { ScheduleModule } from '@nestjs/schedule';
 import { Users } from './db/users.entity';
 import { AuthMiddleware } from './middlewares/auth.middleware';
+import { NewsVisibilityController } from './news/new-visibility/newsvisibility.controller';
 
 @Module({
   imports: [
-    HideNewsModule,
+    NewsVisibilityModule,
     SearchNewsModule,
     AuthModule,
     //TODO: configure env variables in a nestjs way and type .env
@@ -41,6 +42,8 @@ import { AuthMiddleware } from './middlewares/auth.middleware';
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(AuthMiddleware).forRoutes(SearchNewsController);
+    consumer
+      .apply(AuthMiddleware)
+      .forRoutes(SearchNewsController, NewsVisibilityController);
   }
 }
