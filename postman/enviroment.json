@@ -1,0 +1,18 @@
+{
+  "id": "6fb076e6-d049-447b-bcec-4c4d4f5c5d3e",
+  "name": "hacker_news_reign",
+  "values": [
+    {
+      "key": "api",
+      "value": "https://api.servinges.cl",
+      "enabled": true,
+      "type": "default"
+    },
+    {
+      "key": "jwt",
+      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInVzZXJFbWFpbCI6ImV4YW1wbGVAcmVpZ24uY2wiLCJpYXQiOjE2NTc1NzgzNTAsImV4cCI6MTY4OTExNDM1MH0.0KmwYabx9hrp1mYWzuGoXB8Xv0rb0sOACqvKhi_uA_M",
+      "enabled": true,
+      "type": "default"
+    }
+  ]
+}

@@ -1,0 +1,262 @@
+{
+	"info": {
+		"_postman_id": "09066bca-2485-4eab-a789-eb5629b9dbb1",
+		"name": "Hacker_news_reign",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17685497"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"example@reign.cl\",\r\n    \"password\": \"password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/auth/login",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Search",
+			"item": [
+				{
+					"name": "search",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/search?tags=COMMENt&month_word=march",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"search"
+							],
+							"query": [
+								{
+									"key": "author",
+									"value": "015A",
+									"disabled": true
+								},
+								{
+									"key": "tags",
+									"value": "COMMENt"
+								},
+								{
+									"key": "min_date",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "max_date",
+									"value": "1657466264",
+									"disabled": true
+								},
+								{
+									"key": "month_word",
+									"value": "march"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Visibility",
+			"item": [
+				{
+					"name": "hide records",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{api}}/visibility/hide?tags=COMMENt&month_word=march",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"visibility",
+								"hide"
+							],
+							"query": [
+								{
+									"key": "author",
+									"value": "015A",
+									"disabled": true
+								},
+								{
+									"key": "tags",
+									"value": "COMMENt"
+								},
+								{
+									"key": "min_date",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "max_date",
+									"value": "1657466264",
+									"disabled": true
+								},
+								{
+									"key": "month_word",
+									"value": "march"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "show records",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{api}}/visibility/show?tags=COMMENt&month_word=march",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"visibility",
+								"show"
+							],
+							"query": [
+								{
+									"key": "author",
+									"value": "015A",
+									"disabled": true
+								},
+								{
+									"key": "tags",
+									"value": "COMMENt"
+								},
+								{
+									"key": "min_date",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "max_date",
+									"value": "1657466264",
+									"disabled": true
+								},
+								{
+									"key": "month_word",
+									"value": "march"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get hidden records",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api}}/visibility/hidden",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"visibility",
+								"hidden"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "items_per_page",
+									"value": "1",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
