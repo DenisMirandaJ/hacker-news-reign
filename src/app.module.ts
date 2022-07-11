@@ -1,3 +1,5 @@
+import { HideNewsService } from './news/hide-news/hideNews.service';
+import { HideNewsModule } from './news/hide-news/hideNews.module';
 import { SearchNewsController } from './news/search-news/searchNews.controller';
 import { SearchNewsModule } from './news/search-news/searchNews.module';
 import { AuthModule } from './auth/auth.module';
@@ -16,6 +18,7 @@ import { AuthMiddleware } from './middlewares/auth.middleware';
 
 @Module({
   imports: [
+    HideNewsModule,
     SearchNewsModule,
     AuthModule,
     //TODO: configure env variables in a nestjs way and type .env
