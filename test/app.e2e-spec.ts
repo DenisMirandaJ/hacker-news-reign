@@ -2,6 +2,9 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { AppModule } from './../src/app.module';
+import { Connection } from 'typeorm';
+jest.useFakeTimers();
+jest.setTimeout(30000);
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
@@ -15,10 +18,15 @@ describe('AppController (e2e)', () => {
     await app.init();
   });
 
-  it('/ (GET)', () => {
-    return request(app.getHttpServer())
-      .get('/')
-      .expect(200)
-      .expect('Hello World!');
+  beforeAll((done) => {
+    done();
+  });
+
+  afterEach(async () => {
+    await app.close();
+  });
+
+  it('/search (GET) to fail with 401 code (No auth token provided)', () => {
+    return request(app.getHttpServer()).get('/search').expect(401);
   });
 });
