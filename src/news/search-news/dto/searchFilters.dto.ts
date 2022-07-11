@@ -17,7 +17,7 @@ export class QueryFiltersDto {
   @IsOptional()
   tags?: RecursiveArray<string>;
 
-  @ApiPropertyOptional({ description: 'UNIX Timestamp' })
+  @ApiPropertyOptional({ description: 'UNIX Timestamp in seconds' })
   @Transform(({ value }) => parseInt(value))
   @IsNumber(
     { maxDecimalPlaces: 0 },
@@ -26,7 +26,7 @@ export class QueryFiltersDto {
   @IsOptional()
   min_date?: number; // Unix TimeStamp
 
-  @ApiPropertyOptional({ description: 'UNIX Timestamp' })
+  @ApiPropertyOptional({ description: 'UNIX Timestamp in seconds' })
   @Transform(({ value }) => parseInt(value))
   @IsNumber(
     { maxDecimalPlaces: 0 },
