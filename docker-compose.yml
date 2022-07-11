@@ -11,7 +11,7 @@ services:
       - pgdata:/var/lib/postgresql/data
     ports:
       - "${DB_PORT}:${DB_PORT}"
-    command: -p ${}
+    command: -p ${DB_PORT}
     # network_mode: host
 
   nestjs:
