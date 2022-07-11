@@ -23,6 +23,7 @@
   [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
 ## Description
+An implementation of a small subset of the capabilities of the Hacker News Algolia API. New Items are retrieved every hour from the main HN API.  
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
@@ -97,6 +98,7 @@ All endpoints require a Bearer token to be used, to obtain a token:
 - The API Docs are available at /api/docs
 - The .env files are included in the repository only to aid the ease of use, I undestand is a bad practice to do so.
 - One thing I'd have liked to do would be to implement the complex tags filtering from the Algolia API, I did not have enough time this weekend.
+- An Online version of this API is available at my personal site http://www.servinges.cl/hacker-news/ because I wanted to demostrate that I have some knowledge about web servers configuration (nginx), ec2, web hosting, etc. 
 
 ## License
 
