@@ -32,7 +32,7 @@ import { NewsVisibilityController } from './news/new-visibility/newsvisibility.c
       database: process.env.DB_NAME,
       entities: [NewsLoadTimes, HackerNews, Users],
       synchronize: true,
-      logging: true,
+      // logging: true,
     }),
     ScheduleModule.forRoot(),
     LoadNewsModule,
