@@ -28,13 +28,24 @@
 
 ## Installation
 
+Direct
+
 ```bash
 $ npm install
+```
+
+Docker container
+
+```bash
+  # Bundled with a postgresql database
+$ docker compose -f "docker-compose.yml" up --build
 ```
 
 ## Running the app
 
 ```bash
+# docker
+  docker compose -f "docker-compose.yml" up
 # development
 $ npm run start
 
@@ -58,16 +69,35 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
-## Support
+## Postman
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+A Postman collection and enviroment are provided inside the postman forder for easy of use
 
-## Stay in touch
+# Usage with Postman
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+All endpoints require a Bearer token to be used, to obtain a token:
+
+1. In postman set the api enviroment variable to the appropiate URL, by default it'lñ be localhost:3000 unless changed by the .env files 
+2. Import the Collection and enviroment files from the postman folder into Postman
+3. Inside the collection run the login request, it will return a JWT auth token. The default body of the request must be:
+
+```json
+# This user is seeded on to the DB by default
+{
+  "email": "example@reign.cl",
+  "password": "password"
+}
+```
+
+4. Put the received token on the postman's jwt enviroment variable
+5. All the other endpoints are ready to be used   
 
 ## License
+
+## Notes
+
+* The API Docs are available at /api/docs
+* The .env files are included in the repository only to aid the ease of use, I undestand is a bad practice to do so
+* One thing I'd have liked to do would be to implement the complex tags filtering from the Algolia API, I did not have enough time this weekend
 
 Nest is [MIT licensed](LICENSE).
