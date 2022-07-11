@@ -1,4 +1,3 @@
-import { NewsVisibilityService } from './news/new-visibility/newsVisibility.service.ts';
 import { NewsVisibilityModule } from './news/new-visibility/newsVisibility.module';
 import { SearchNewsController } from './news/search-news/searchNews.controller';
 import { SearchNewsModule } from './news/search-news/searchNews.module';
@@ -33,6 +32,7 @@ import { NewsVisibilityController } from './news/new-visibility/newsvisibility.c
       database: process.env.DB_NAME,
       entities: [NewsLoadTimes, HackerNews, Users],
       synchronize: true,
+      logging: true,
     }),
     ScheduleModule.forRoot(),
     LoadNewsModule,

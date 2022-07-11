@@ -1,0 +1,49 @@
+services:
+  db:
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+    container_name: postgres-db
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    # network_mode: host
+
+  nestjs:
+    container_name: hacker_news_api
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    working_dir: /app
+    env_file:
+      - .env.docker
+    expose:
+      - 3000
+    environment:
+      - DB_HOST=db
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME}
+      - JWT_SECRET=${JWT_SECRET}
+      - DB_PORT=${DB_PORT}
+      - PORT=${PORT}
+    ports:
+      - '3000:3000'
+    # network_mode: host
+    depends_on:
+      - db
+    # volumes:
+    #   - service_data:/app
+    #   - service_data_node_modules:/app/node_modules
+    command: node ./dist/main.js
+volumes:
+  pgdata:
+    # service_data:
+    # service_data_node_modules:
+
+
+
