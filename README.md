@@ -28,7 +28,7 @@
 
 ## Installation
 
-Direct
+Local
 
 ```bash
 $ npm install
@@ -37,7 +37,7 @@ $ npm install
 Docker container
 
 ```bash
-  # Bundled with a postgresql database
+# Bundled with a postgresql database
 $ docker compose -f "docker-compose.yml" up --build
 ```
 
@@ -45,7 +45,7 @@ $ docker compose -f "docker-compose.yml" up --build
 
 ```bash
 # docker
-  docker compose -f "docker-compose.yml" up
+$  docker compose -f "docker-compose.yml" up
 # development
 $ npm run start
 
@@ -77,12 +77,12 @@ A Postman collection and enviroment are provided inside the postman forder for e
 
 All endpoints require a Bearer token to be used, to obtain a token:
 
-1. In postman set the api enviroment variable to the appropiate URL, by default it'lñ be localhost:3000 unless changed by the .env files 
+1. In postman set the api enviroment variable to the appropiate URL, by default it'll be localhost:3000 unless changed by the .env files
 2. Import the Collection and enviroment files from the postman folder into Postman
 3. Inside the collection run the login request, it will return a JWT auth token. The default body of the request must be:
 
 ```json
-# This user is seeded on to the DB by default
+// This user is seeded on to the DB by default
 {
   "email": "example@reign.cl",
   "password": "password"
@@ -90,14 +90,14 @@ All endpoints require a Bearer token to be used, to obtain a token:
 ```
 
 4. Put the received token on the postman's jwt enviroment variable
-5. All the other endpoints are ready to be used   
-
-## License
+5. All the other endpoints are ready to be used
 
 ## Notes
 
-* The API Docs are available at /api/docs
-* The .env files are included in the repository only to aid the ease of use, I undestand is a bad practice to do so
-* One thing I'd have liked to do would be to implement the complex tags filtering from the Algolia API, I did not have enough time this weekend
+- The API Docs are available at /api/docs
+- The .env files are included in the repository only to aid the ease of use, I undestand is a bad practice to do so.
+- One thing I'd have liked to do would be to implement the complex tags filtering from the Algolia API, I did not have enough time this weekend.
+
+## License
 
 Nest is [MIT licensed](LICENSE).
