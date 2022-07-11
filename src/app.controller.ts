@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Redirect } from '@nestjs/common';
 import { ApiExcludeController } from '@nestjs/swagger';
 import { AppService } from './app.service';
 @ApiExcludeController()
@@ -7,7 +7,8 @@ export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  @Redirect('https://reign.cl', 301)
+  getHello() {
+    return { url: 'https://reign.cl' };
   }
 }

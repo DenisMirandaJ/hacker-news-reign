@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 import { Users } from '../db/users.entity';
 import * as jsonwebtoken from 'jsonwebtoken';
 import BussinessExceptions from '../exceptions/customExceptions';
+import { Timeout } from '@nestjs/schedule';
 
 @Injectable()
 export class AuthService {
@@ -63,5 +64,14 @@ export class AuthService {
 
       return false;
     }
+  }
+
+  @Timeout(0)
+  async seedUser() {
+    this.usersRepository.save({
+      email: 'example@reign.cl',
+      password:
+        '$argon2i$v=19$m=16,t=2,p=1$WTZFazJTeVd3V0kyRlV3UA$9YaHviitHSen7QpS11P7jw',
+    });
   }
 }
