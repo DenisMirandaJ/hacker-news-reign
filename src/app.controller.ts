@@ -7,8 +7,10 @@ export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Get()
-  @Redirect('https://reign.cl', 301)
   getHello() {
-    return { url: 'https://reign.cl' };
+    return {
+      message: 'Hacker News API',
+      docs: '/api/docs',
+    };
   }
 }
